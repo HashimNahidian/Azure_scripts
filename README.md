@@ -16,14 +16,15 @@ Task 2: Create a Linux virtual machine
     From Cloud Shell, run the following az vm create command to create a Linux VM:
     Azure CLI 
 
-    az vm create \
-      --resource-group "IntroAzureRG" \
-      --name my-vm \
-      --size Standard_D2s_v5 \
-      --public-ip-sku Standard \
-      --image Ubuntu2204 \
-      --admin-username azureuser \
-      --generate-ssh-keys    
+az vm create `
+  --resource-group "IntroAzureRG2" `
+  --name my-vm `
+  --location eastus2 `
+  --size Standard_D2as_v6 `
+  --public-ip-sku Standard `
+  --image Ubuntu2204 `
+  --admin-username azureuser `
+  --generate-ssh-keys  
 
     Your VM takes a few moments to come up. You named the VM my-vm. You use this name to refer to the VM in later steps.
 
@@ -34,14 +35,15 @@ After your VM is created, you'll use a Custom Script Extension to install Nginx.
     Run the following az vm extension set command to configure Nginx on your VM:
     Azure CLI 
 
-    az vm extension set \
-      --resource-group "IntroAzureRG" \
-      --vm-name my-vm \
-      --name customScript \
-      --publisher Microsoft.Azure.Extensions \
-      --version 2.1 \
-      --settings '{"fileUris":["https://raw.githubusercontent.com/MicrosoftDocs/mslearn-welcome-to-azure/master/configure-nginx.sh"]}' \
-      --protected-settings '{"commandToExecute": "./configure-nginx.sh"}'    
+    az vm extension set `
+  --resource-group "IntroAzureRG2" `
+  --vm-name my-vm `
+  --name customScript `
+  --publisher Microsoft.Azure.Extensions `
+  --version 2.1 `
+  --settings '{"fileUris":["https://raw.githubusercontent.com/MicrosoftDocs/mslearn-welcome-to-azure/master/configure-nginx.sh"]}' `
+  --protected-settings '{"commandToExecute": "./configure-nginx.sh"}'
+
 
     This command uses the Custom Script Extension to run a Bash script on your VM. The script is stored on GitHub. While the command runs, you can choose to examine the Bash script from a separate browser tab. To summarize, the script:
         Runs apt-get update to download the latest package information from the internet. This step helps ensure that the next command can locate the latest version of the Nginx package.
